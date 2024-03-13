@@ -24,6 +24,8 @@ public class MySecurityConfigurations {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             // again replacement for deprecated methods, we are creating stateless session as this is a REST Application 
             .authorizeHttpRequests((authorize)->authorize //again, old method is deprecated so this is the latest API
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers("/user/**").hasRole("USER")
             .requestMatchers("/swagger-ui/**").permitAll() // ant matchers is also deprecated, so this is the replacement
             .requestMatchers( "/common/**").permitAll() // we can also provide allowed methods before the url pattern
             .anyRequest().authenticated()) // rest all the end points are authenticated
