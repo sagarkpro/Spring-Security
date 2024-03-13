@@ -34,23 +34,17 @@ public class MyJwtFilter extends OncePerRequestFilter {
             System.out.println("\n\n" + "found jwt token: " + jwtToken + "\n\n");
             String username = myJwtService.getUsername(jwtToken);
 
-            System.out.println("\n\n" + 11 + "\n\n");
             UserDetails userDetails = usersService.loadUserByUsername(username);
 
-            System.out.println("\n\n" + 22 + "\n\n");
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null,  userDetails.getAuthorities());
 
-            System.out.println("\n\n" + 33 + "\n\n");
             usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             
-            System.out.println("\n\n" + 44 + "\n\n");
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-            System.out.println("\n\n" + 55 + "\n\n");
 
         }
         filterChain.doFilter(request, response);
-        System.out.println("\n\n" + 66 + "\n\n");
     }
 
     private String getJwtTokenFromRequest(HttpServletRequest request){

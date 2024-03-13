@@ -56,13 +56,9 @@ public class MyJwtService {
             System.out.println(jwtToken + "\n\n");
             
             JwtParserBuilder jwt =  Jwts.parserBuilder();
-            System.out.println("\n\n" + 1 + "\n\n");
             jwt.setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey)));
-            System.out.println("\n\n" + 2 + "\n\n");
             JwtParser jwwwt =  jwt.build();
-            System.out.println("\n\n" + 3 + "\n\n");
             jwwwt.parseClaimsJws(token[1]);
-            System.out.println("\n\n" + 4 + "\n\n");
                 // .setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey)))
                 // .build()
                 // .parseClaimsJws(jwtToken);
