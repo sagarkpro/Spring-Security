@@ -11,7 +11,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,22 +28,20 @@ import lombok.ToString;
 public class Users extends BaseEntity implements UserDetails {
 
 
-    @Size(min = 4, max = 100)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false)
-    @Size(min = 1, max = 100)
+    @Column(nullable = false, length = 100)
+
     private String firstName;
 
-    @Size(min = 1, max = 100)
+    @Column(length = 100)
     private String middleName;
 
-    @Size(min = 1, max = 100)
+    @Column(length = 100)
     private String lastName;
 
-    @Column(nullable = false)
-    @Size(min = 1, max = 100)
+    @Column(nullable = false, length = 100)
     private String password;
 
 
