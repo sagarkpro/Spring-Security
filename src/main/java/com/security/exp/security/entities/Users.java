@@ -35,10 +35,10 @@ public class Users extends BaseEntity implements UserDetails {
 
     private String firstName;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = true)
     private String middleName;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = true)
     private String lastName;
 
     @Column(nullable = false, length = 100)
