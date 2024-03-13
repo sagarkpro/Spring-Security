@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.security.exp.security.daos.UsersDao;
@@ -22,6 +23,10 @@ import jakarta.validation.Valid;
 
 @Service
 public class UsersServiceImpl implements UsersService, UserDetailsService{
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     @Autowired
     ModelMapper modelMapper;
@@ -41,6 +46,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService{
 
         Users user = modelMapper.map(dto, Users.class);
         user.setRole(Roles.ROLE_USER);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         userDao.save(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("User Created!");
