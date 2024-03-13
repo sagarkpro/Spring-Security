@@ -7,6 +7,7 @@ import com.security.exp.security.daos.UsersDao;
 import com.security.exp.security.dtos.LoginDto;
 import com.security.exp.security.dtos.RegisterDto;
 import com.security.exp.security.services.UsersService;
+import com.security.exp.security.websecurity.MyJwtService;
 
 import jakarta.validation.Valid;
 
@@ -20,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -27,6 +30,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/common")
 public class CommonController {
+
+    @Autowired
+    MyJwtService myJwtService;
+
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -42,10 +49,24 @@ public class CommonController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto dto) {
+
+        // Authentication.authenticate will automatically authenticate the user using UsernamePasswordAuthenticationToken's object
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
+
+        // we are storing authentication in SecurityContectHolder object so that user don't have to login for every request
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok().body("Logged in succesfully");
+        System.out.println("\n\n" + SecurityContextHolder.getContext() + "\n\n");
+        String token = myJwtService.JwtTokenGenerator(authentication);
+
+        return ResponseEntity.ok().body(token);
     }
+
+
+    @GetMapping("/nopass")
+    public String nopass() {
+        return "no pass needed!";
+    }
+    
     
     
 }

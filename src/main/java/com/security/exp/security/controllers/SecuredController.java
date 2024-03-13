@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SecuredController {
     @GetMapping("/pass")
     public String pass() {
+        System.out.println("\n\n" + "inside secured cont" + "\n\n");
         return "THIS MEHTOD REQUIRES PASS";
     }
     
